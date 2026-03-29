@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-masa-bg: #0a0a0f;
+  --color-masa-surface: #12121a;
+  --color-masa-card: #16161f;
+  --color-masa-border: #1e1e2e;
+  --color-masa-border-light: #2a2a3d;
+  --color-masa-text: #e2e2e8;
+  --color-masa-text-dim: #8888a0;
+  --color-masa-text-muted: #555570;
+  --color-masa-accent: #7c3aed;
+  --color-masa-accent-light: #8b5cf6;
+  --color-masa-accent-glow: rgba(124, 58, 237, 0.4);
+  --color-masa-success: #22c55e;
+  --color-masa-warning: #eab308;
+  --color-masa-info: #3b82f6;
+  --color-masa-danger: #ef4444;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-masa-bg);
+  color: var(--color-masa-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-masa-border-light);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-masa-text-muted);
+}
+
+/* ── Light mode overrides ────────────────────────────────────────────────── */
+/* Applied when <html class="light"> is set by ThemeContext                   */
+.light {
+  --color-masa-bg:           #eeeff5;
+  --color-masa-surface:      #ffffff;
+  --color-masa-card:         #f6f6fb;
+  --color-masa-border:       #dddde8;
+  --color-masa-border-light: #c8c8d8;
+  --color-masa-text:         #18182c;
+  --color-masa-text-dim:     #46466a;
+  --color-masa-text-muted:   #8080a4;
+  /* Accent, semantic and brand colors intentionally unchanged */
+  --color-masa-accent:       #7c3aed;
+  --color-masa-accent-light: #7c3aed;
+  --color-masa-accent-glow:  rgba(124, 58, 237, 0.25);
+  --color-masa-success:      #15803d;
+  --color-masa-warning:      #b45309;
+  --color-masa-info:         #1d4ed8;
+  --color-masa-danger:       #b91c1c;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--color-masa-accent-glow), 0 0 40px rgba(124, 58, 237, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--color-masa-accent-glow), 0 0 60px rgba(124, 58, 237, 0.25);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
