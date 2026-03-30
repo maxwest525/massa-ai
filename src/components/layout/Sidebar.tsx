@@ -8,17 +8,20 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { useProject } from '../../hooks/useProject';
+import { useUI, type AppView } from '../../context/UIContext';
 
 interface NavItem {
   icon: React.ReactNode;
   label: string;
   active?: boolean;
   badge?: string;
+  onClick?: () => void;
 }
 
-function NavButton({ icon, label, active, badge }: NavItem) {
+function NavButton({ icon, label, active, badge, onClick }: NavItem) {
   return (
     <button
+      onClick={onClick}
       className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
         active
           ? 'bg-masa-accent/10 text-masa-accent-light'
@@ -38,6 +41,14 @@ function NavButton({ icon, label, active, badge }: NavItem) {
 
 export function Sidebar() {
   const { projects, activeProject, setActiveProjectId, activeAgent, setActiveAgentId } = useProject();
+  const { currentView, setCurrentView } = useUI();
+
+  const nav: { id: AppView; label: string; icon: React.ReactNode; badge?: string }[] = [
+    { id: 'dashboard',   label: 'Dashboard',   icon: <LayoutDashboard className="w-4 h-4" /> },
+    { id: 'history',     label: 'History',     icon: <Clock           className="w-4 h-4" />, badge: activeProject.history.length > 0 ? String(activeProject.history.length) : undefined },
+    { id: 'automations', label: 'Automations', icon: <Workflow        className="w-4 h-4" /> },
+    { id: 'deploy',      label: 'Deploy',      icon: <Rocket          className="w-4 h-4" /> },
+  ];
 
   return (
     <aside className="w-60 border-r border-masa-border bg-masa-surface flex flex-col shrink-0 overflow-hidden">
@@ -113,24 +124,16 @@ export function Sidebar() {
             Navigation
           </h3>
           <div className="space-y-0.5">
-            <NavButton
-              icon={<LayoutDashboard className="w-4 h-4" />}
-              label="Dashboard"
-              active
-            />
-            <NavButton
-              icon={<Clock className="w-4 h-4" />}
-              label="History"
-              badge={String(activeProject.history.length)}
-            />
-            <NavButton
-              icon={<Workflow className="w-4 h-4" />}
-              label="Automations"
-            />
-            <NavButton
-              icon={<Rocket className="w-4 h-4" />}
-              label="Deploy"
-            />
+            {nav.map(({ id, label, icon, badge }) => (
+              <NavButton
+                key={id}
+                icon={icon}
+                label={label}
+                active={currentView === id}
+                badge={badge}
+                onClick={() => setCurrentView(id)}
+              />
+            ))}
           </div>
         </div>
       </div>
