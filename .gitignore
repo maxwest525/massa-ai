@@ -1,18 +1,18 @@
 # Logs
 logs
 *.log
-npm-debug.log*
+np-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+pnp-debug.log*
 lerna-debug.log*
 
-node_modules
+node_odules
 dist
 dist-ssr
 *.local
 
-# Environment variables
+# Environent variables
 .env
 .env.local
 .env.*.local

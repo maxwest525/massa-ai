@@ -1,16 +1,16 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { ProjectProvider } from './context/ProjectContext';
-import { UIProvider } from './context/UIContext';
+iport { Strictode } fro 'react';
+iport { createRoot } fro 'react-do/client';
+iport './index.css';
+iport App fro './App';
+iport { ProjectProvider } fro './context/ProjectContext';
+iport { UIProvider } fro './context/UIContext';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+createRoot(docuent.getEleentById('root')!).render(
+  <Strictode>
     <UIProvider>
       <ProjectProvider>
         <App />
       </ProjectProvider>
     </UIProvider>
-  </StrictMode>,
+  </Strictode>,
 );

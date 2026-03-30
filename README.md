@@ -1,19 +1,19 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This teplate provides a inial setup to get React working in Vite with HR and soe ESLint rules.
 
 Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [@vitejs/plugin-react](https://github.co/vitejs/vite-plugin-react/blob/ain/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.co/vitejs/vite-plugin-react/blob/ain/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## React Copiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The React Copiler is not enabled on this teplate because of its ipact on dev & build perforances. To add it, see [this docuentation](https://react.dev/learn/react-copiler/installation).
 
 ## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+If you are developing a production application, we recoend updating the configuration to enable type-aware lint rules:
 
 ```js
 export default defineConfig([
@@ -23,8 +23,8 @@ export default defineConfig([
     extends: [
       // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
+      // Reove tseslint.configs.recoended and replace with this
+      tseslint.configs.recoendedTypeChecked,
       // Alternatively, use this for stricter rules
       tseslint.configs.strictTypeChecked,
       // Optionally, add this for stylistic rules
@@ -35,7 +35,7 @@ export default defineConfig([
     languageOptions: {
       parserOptions: {
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: iport.eta.dirnae,
       },
       // other options...
     },
@@ -43,12 +43,12 @@ export default defineConfig([
 ])
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+You can also install [eslint-plugin-react-x](https://github.co/Rel1cx/eslint-react/tree/ain/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-do](https://github.co/Rel1cx/eslint-react/tree/ain/packages/plugins/eslint-plugin-react-do) for React-specific lint rules:
 
 ```js
 // eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+iport reactX fro 'eslint-plugin-react-x'
+iport reactDo fro 'eslint-plugin-react-do'
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -57,14 +57,14 @@ export default defineConfig([
     extends: [
       // Other configs...
       // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
+      reactX.configs['recoended-typescript'],
+      // Enable lint rules for React DO
+      reactDo.configs.recoended,
     ],
     languageOptions: {
       parserOptions: {
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: iport.eta.dirnae,
       },
       // other options...
     },
