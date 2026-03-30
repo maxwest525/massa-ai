@@ -1,5 +1,8 @@
 import { isOpenAIKeySet, isXAIKeySet } from './config';
-import { enhancePromptWithGPT, type EnhancedPromptResult } from './openai';
+import {
+  enhancePromptWithGPT,
+  type EnhancedPromptResult,
+} from './openai';
 import { enhancePromptWithXAI } from './xai';
 
 export type EnhanceProvider = 'auto' | 'openai' | 'xai';
@@ -71,10 +74,10 @@ export async function runEnhancement(
     : false;
 
   const startMs = Date.now();
-  const result =
+  const result: EnhancedPromptResult =
     resolved === 'xai'
       ? await enhancePromptWithXAI(rawPrompt)
-      : await enhancePromptWithGPT(rawPrompt);
+      : (await enhancePromptWithGPT(rawPrompt)).result;
 
   return {
     result,

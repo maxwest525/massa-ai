@@ -37,8 +37,9 @@ function pickRecommendedTool(text: string): BuildTool {
 export function prepareBuildPayload(
   enhancedResult: EnhancedPromptResult | null,
   planResult: PlanResult | null,
-  _routeDecision: RouteDecision | null,
+  routeDecision: RouteDecision | null,
 ): BuildPayload {
+  void routeDecision; // reserved for routing-aware payload shaping
   const goal = enhancedResult?.objective ?? 'Execute planned task';
   const steps = planResult?.implementationPlan ?? [];
   const files = planResult?.componentSuggestions ?? [];

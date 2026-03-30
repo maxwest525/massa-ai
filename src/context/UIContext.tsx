@@ -14,7 +14,8 @@ interface UIContextValue {
   setCurrentView: (view: AppView) => void;
 }
 
-const UIContext = createContext<UIContextValue>({
+/** Used when `useUI()` runs outside `UIProvider` (tests, Storybook). No-ops avoid crashes. */
+const UI_OUTSIDE_PROVIDER_FALLBACK: UIContextValue = {
   theme: 'dark',
   toggleTheme: () => {},
   previewOpen: false,
@@ -22,7 +23,9 @@ const UIContext = createContext<UIContextValue>({
   setPreviewOpen: () => {},
   currentView: 'dashboard',
   setCurrentView: () => {},
-});
+};
+
+const UIContext = createContext<UIContextValue | null>(null);
 
 export function UIProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
@@ -79,4 +82,19 @@ export function UIProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export const useUI = () => useContext(UIContext);
+/**
+ * Returns UI state from the nearest `UIProvider`.
+ * If called outside a provider (e.g. tests, Storybook), returns safe no-op fallbacks — never `null`.
+ */
+export function useUI(): UIContextValue {
+  const ctx = useContext(UIContext);
+  if (ctx !== null) {
+    return ctx;
+  }
+  if (import.meta.env.DEV) {
+    console.warn(
+      '[useUI] No UIProvider found — using no-op fallbacks. Wrap the tree with <UIProvider> in main.tsx for real state.',
+    );
+  }
+  return UI_OUTSIDE_PROVIDER_FALLBACK;
+}

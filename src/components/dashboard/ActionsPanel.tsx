@@ -1,4 +1,4 @@
-import { Wand2, Route, FileText, Hammer, Rocket, Globe, GitCommit, Loader2, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
+import { Wand2, Route, FileText, Hammer, Rocket, Globe, GitCommit, PackageOpen, Loader2, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
 import { useProject } from '../../hooks/useProject';
 import type { Action, ActionStatus } from '../../types';
 
@@ -10,6 +10,7 @@ const typeIcons: Record<Action['type'], React.ReactNode> = {
   deploy: <Rocket className="w-3.5 h-3.5" />,
   scrape: <Globe className="w-3.5 h-3.5" />,
   commit: <GitCommit className="w-3.5 h-3.5" />,
+  packet: <PackageOpen className="w-3.5 h-3.5" />,
 };
 
 const statusBadge: Record<ActionStatus, { icon: React.ReactNode; className: string }> = {

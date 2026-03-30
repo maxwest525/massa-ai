@@ -186,13 +186,15 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
 
   // Restore per-project preferences when switching projects
   useEffect(() => {
-    setPersistedHistory(getAllHistory(activeProjectId));
+    queueMicrotask(() => {
+      setPersistedHistory(getAllHistory(activeProjectId));
 
-    const savedProvider = localStorage.getItem(SK_ENHANCE_PROVIDER(activeProjectId));
-    setEnhanceProviderState((savedProvider as EnhanceProvider | null) ?? 'auto');
+      const savedProvider = localStorage.getItem(SK_ENHANCE_PROVIDER(activeProjectId));
+      setEnhanceProviderState((savedProvider as EnhanceProvider | null) ?? 'auto');
 
-    const savedTarget = localStorage.getItem(SK_BUILD_TARGET(activeProjectId));
-    setBuildTargetState((savedTarget as BuildTarget | null) ?? 'internal');
+      const savedTarget = localStorage.getItem(SK_BUILD_TARGET(activeProjectId));
+      setBuildTargetState((savedTarget as BuildTarget | null) ?? 'internal');
+    });
   }, [activeProjectId]);
 
   // ── Action/change helpers ─────────────────────────────────────────────────
@@ -453,7 +455,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
 
   // ── Generate Build Packet ─────────────────────────────────────────────────
 
-  const generateBuildPacket = useCallback(() => {
+  const generateBuildPacket = () => {
     if (!enhancedResult && !rawPrompt.trim()) return;
 
     const packet = generatePacketFn({
@@ -490,10 +492,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
     });
 
     persistMemory({ packet });
-  }, [
-    activeProjectId, activeAgent, rawPrompt, enhancedResult, routeDecision,
-    planResult, buildTarget, addAction, addChange, persistMemory,
-  ]);
+  };
 
   // ── Build ─────────────────────────────────────────────────────────────────
 

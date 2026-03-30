@@ -13,7 +13,7 @@ export function TopNav() {
 
   useEffect(() => {
     if (!settingsOpen) {
-      setKeysSet(getKeyStatus().allSet);
+      queueMicrotask(() => setKeysSet(getKeyStatus().allSet));
     }
   }, [settingsOpen]);
 

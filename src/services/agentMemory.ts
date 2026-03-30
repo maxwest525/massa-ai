@@ -48,7 +48,6 @@ export function updateAgentMemory(
     lastPlanSummary: '',
     lastPacketId: null,
     recentActionDescriptions: [],
-    updatedAt: new Date().toISOString(),
     ...existing,
     ...patch,
     updatedAt: new Date().toISOString(),

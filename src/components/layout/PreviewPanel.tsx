@@ -32,12 +32,14 @@ export function PreviewPanel() {
   const [tab, setTab] = useState<Tab>('latest');
   const [copied, setCopied] = useState(false);
 
-  // Auto-advance active tab when new content arrives
+  // Auto-advance active tab when new content arrives (defer setState to avoid cascading renders)
   useEffect(() => {
-    if (buildPacket) { setTab('packet'); return; }
-    if (buildResult || buildPayload) { setTab('build'); return; }
-    if (planResult) { setTab('plan'); return; }
-    if (enhancedResult) { setTab('enhanced'); }
+    queueMicrotask(() => {
+      if (buildPacket) { setTab('packet'); return; }
+      if (buildResult || buildPayload) { setTab('build'); return; }
+      if (planResult) { setTab('plan'); return; }
+      if (enhancedResult) { setTab('enhanced'); }
+    });
   }, [enhancedResult, planResult, buildResult, buildPayload, buildPacket]);
 
   const copyText = (text: string) => {

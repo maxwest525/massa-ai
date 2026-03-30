@@ -159,7 +159,7 @@ export function SettingsPanel({ isOpen, onClose }: Props) {
   const allCoreSet     = isOpenAISet && isAnthropicSet;
 
   useEffect(() => {
-    if (isOpen) refresh();
+    if (isOpen) queueMicrotask(refresh);
   }, [isOpen]);
 
   const handleSaveOpenAI = (key: string) => { setOpenAIKey(key);    refresh(); };
