@@ -10,10 +10,32 @@ import { HistoryPanel } from './components/dashboard/HistoryPanel';
 import { ChangesActivity } from './components/dashboard/ChangesActivity';
 import { AutomationsPanel } from './components/placeholders/AutomationsPanel';
 import { DeployPanel } from './components/placeholders/DeployPanel';
+import { MarketplacePanel } from './components/placeholders/MarketplacePanel';
+import { MyProductsPanel } from './components/placeholders/MyProductsPanel';
 import { useUI } from './context/UIContext';
 
 export default function App() {
   const { currentView } = useUI();
+
+  if (currentView === 'marketplace') {
+    return (
+      <AppShell>
+        <div className="max-w-6xl mx-auto">
+          <MarketplacePanel />
+        </div>
+      </AppShell>
+    );
+  }
+
+  if (currentView === 'my_products') {
+    return (
+      <AppShell>
+        <div className="max-w-6xl mx-auto">
+          <MyProductsPanel />
+        </div>
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell>

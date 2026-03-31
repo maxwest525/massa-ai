@@ -5,7 +5,7 @@ import type { RouteDecision } from './router';
 
 // ── Prompt/session memory ─────────────────────────────────────────────────────
 
-const STORAGE_KEY = 'masa-ai-memory';
+const STORAGE_KEY = 'massa-ai-memory';
 
 export interface ProjectMemoryEntry {
   id: string;
@@ -84,7 +84,7 @@ export function clearAllMemory() {
 
 // ── Packet history ────────────────────────────────────────────────────────────
 
-const PACKET_HISTORY_KEY = 'masa-ai-packet-history';
+const PACKET_HISTORY_KEY = 'massa-ai-packet-history';
 
 function loadPacketStore(): Record<string, BuildPacket[]> {
   try {
@@ -121,7 +121,7 @@ export function clearPacketHistory(projectId: string): void {
 
 // ── Project list persistence ──────────────────────────────────────────────────
 
-const PROJECTS_KEY = 'masa-ai-projects';
+const PROJECTS_KEY = 'massa-ai-projects';
 
 export function saveProjectList(projects: Project[]): void {
   localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));

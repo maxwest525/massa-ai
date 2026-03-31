@@ -208,7 +208,7 @@ const changesProject2: ChangeEntry[] = [
 export const mockProjects: Project[] = [
   {
     id: 'project-1',
-    name: 'MASA Marketing Site',
+    name: 'Massa Marketing Site',
     description: 'Public-facing marketing website with landing page, blog, and pricing',
     createdAt: '2026-03-25T08:00:00Z',
     agents: agentsProject1,

@@ -1,6 +1,6 @@
-export type Provider = 'gpt' | 'xai' | 'claude' | 'replit' | 'lovable' | 'github';
+export type Provider = 'gpt' | 'xai' | 'claude' | 'gemini' | 'replit' | 'lovable' | 'github';
 
-export type EnhanceProvider = 'auto' | 'openai' | 'xai';
+export type EnhanceProvider = 'auto' | 'openai' | 'xai' | 'gemini';
 
 export type BuildTarget = 'internal' | 'replit' | 'lovable' | 'github';
 

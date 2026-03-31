@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Wand2, Loader2, AlertTriangle, Settings } from 'lucide-react';
 import { useProject } from '../../hooks/useProject';
-import { isOpenAIKeySet, isXAIKeySet } from '../../services/config';
+import { isOpenAIKeySet, isXAIKeySet, isGeminiKeySet } from '../../services/config';
 import { canEnhanceWith, type EnhanceProvider } from '../../services/enhancer';
 
 // ── Provider selector ─────────────────────────────────────────────────────────
@@ -13,6 +13,7 @@ const PROVIDER_OPTIONS: {
 }[] = [
   { id: 'auto',   label: 'Auto',    shortLabel: 'Auto'   },
   { id: 'openai', label: 'OpenAI',  shortLabel: 'GPT'    },
+  { id: 'gemini', label: 'Gemini',  shortLabel: 'Gemini' },
   { id: 'xai',    label: 'xAI',     shortLabel: 'Grok'   },
 ];
 
@@ -34,13 +35,15 @@ function ProviderSelector({
 
   void tick; // drives re-render for live key status
 
-  const openaiOk = isOpenAIKeySet();
-  const xaiOk    = isXAIKeySet();
+  const openaiOk  = isOpenAIKeySet();
+  const xaiOk     = isXAIKeySet();
+  const geminiOk  = isGeminiKeySet();
 
   const available: Record<EnhanceProvider, boolean> = {
-    auto:   openaiOk || xaiOk,
+    auto:   openaiOk || xaiOk || geminiOk,
     openai: openaiOk,
     xai:    xaiOk,
+    gemini: geminiOk,
   };
 
   return (
@@ -166,15 +169,17 @@ export function EnhanceButton() {
               <Loader2 className="w-5 h-5 animate-spin" />
               <span>
                 Enhancing via {
-                  enhanceProvider === 'auto' ? 'best available provider' :
-                  enhanceProvider === 'xai' ? 'xAI Grok' : 'OpenAI GPT'
+                  enhanceProvider === 'auto'   ? 'best available provider' :
+                  enhanceProvider === 'xai'    ? 'xAI Grok' :
+                  enhanceProvider === 'gemini' ? 'Google Gemini' :
+                  'OpenAI GPT'
                 }...
               </span>
             </>
           ) : (
             <>
               <Wand2 className="w-5 h-5 transition-transform group-hover:rotate-12" />
-              <span>Enhance Prompt</span>
+              <span>Enhance + Recommend Best Route</span>
             </>
           )}
         </div>

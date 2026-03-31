@@ -20,7 +20,7 @@ export interface EnhanceCallMeta {
 const MODEL = 'gpt-4o-mini';
 const TIMEOUT_MS = 30_000;
 
-const SYSTEM_PROMPT = `You are MASA AI's prompt enhancement engine. Your job is to take a messy, informal user request and transform it into a clear, structured build specification.
+const SYSTEM_PROMPT = `You are Massa AI's prompt enhancement engine. Your job is to take a messy, informal user request and transform it into a clear, structured build specification.
 
 Return your response in EXACTLY this format (use these exact headers):
 

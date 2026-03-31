@@ -5,6 +5,8 @@ import {
   Clock,
   Workflow,
   Rocket,
+  Store,
+  Package,
   ChevronRight,
 } from 'lucide-react';
 import { useProject } from '../../hooks/useProject';
@@ -45,9 +47,16 @@ export function Sidebar() {
 
   const nav: { id: AppView; label: string; icon: React.ReactNode; badge?: string }[] = [
     { id: 'dashboard',   label: 'Dashboard',   icon: <LayoutDashboard className="w-4 h-4" /> },
-    { id: 'history',     label: 'History',     icon: <Clock           className="w-4 h-4" />, badge: activeProject.history.length > 0 ? String(activeProject.history.length) : undefined },
-    { id: 'automations', label: 'Automations', icon: <Workflow        className="w-4 h-4" /> },
-    { id: 'deploy',      label: 'Deploy',      icon: <Rocket          className="w-4 h-4" /> },
+    {
+      id: 'history',
+      label: 'History',
+      icon: <Clock className="w-4 h-4" />,
+      badge: activeProject.history.length > 0 ? String(activeProject.history.length) : undefined,
+    },
+    { id: 'automations', label: 'Automations', icon: <Workflow className="w-4 h-4" /> },
+    { id: 'deploy',      label: 'Deploy',      icon: <Rocket className="w-4 h-4" /> },
+    { id: 'marketplace', label: 'Marketplace', icon: <Store className="w-4 h-4" /> },
+    { id: 'my_products', label: 'My Products', icon: <Package className="w-4 h-4" /> },
   ];
 
   return (

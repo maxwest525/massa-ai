@@ -15,7 +15,7 @@ export function RawPromptInput() {
         value={rawPrompt}
         onChange={(e) => setRawPrompt(e.target.value)}
         disabled={disabled}
-        placeholder="Describe what you want to build... Be as messy as you want. MASA AI will turn it into the perfect prompt."
+        placeholder="Describe what you want to build... Be as messy as you want. Massa AI will turn it into the perfect prompt."
         className="w-full min-h-[140px] pt-10 pb-4 px-4 bg-masa-card border border-masa-border rounded-xl text-masa-text placeholder:text-masa-text-muted/60 font-mono text-sm leading-relaxed resize-y focus:outline-none focus:border-masa-accent/50 focus:ring-1 focus:ring-masa-accent/20 transition-all disabled:opacity-50"
       />
     </div>

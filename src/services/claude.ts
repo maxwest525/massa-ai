@@ -1,4 +1,6 @@
 import { getAnthropicKey } from './config';
+import { buildKnowledgeBase } from './knowledge';
+import type { Project } from '../types';
 
 export interface PlanResult {
   implementationPlan: string[];
@@ -8,7 +10,7 @@ export interface PlanResult {
   fullText: string;
 }
 
-const SYSTEM_PROMPT = `You are MASA AI's planning and architecture engine. Given an enhanced build specification, produce a concrete implementation plan.
+const BASE_SYSTEM_PROMPT = `You are Massa AI's planning and architecture engine. Given an enhanced build specification, produce a concrete implementation plan.
 
 Return your response in EXACTLY this format:
 
@@ -27,7 +29,8 @@ Return your response in EXACTLY this format:
 ## Recommended Next Action
 [One clear sentence: what should be done first]
 
-Be practical, specific, and opinionated. Favor modern best practices.`;
+Be practical, specific, and opinionated. Favor modern best practices.
+Use the knowledge base above (if present) to tailor your plan to the user's project context, agents, and past work.`;
 
 function parsePlanResponse(text: string): PlanResult {
   const section = (header: string): string => {
@@ -50,11 +53,17 @@ function parsePlanResponse(text: string): PlanResult {
   };
 }
 
-export async function planWithClaude(enhancedPrompt: string): Promise<PlanResult> {
+export async function planWithClaude(
+  enhancedPrompt: string,
+  activeProject: Project | null = null,
+): Promise<PlanResult> {
   const apiKey = getAnthropicKey();
   if (!apiKey) {
     throw new Error('Anthropic API key is not set. Open Settings (⚙) to add your key.');
   }
+
+  const knowledgeBase = buildKnowledgeBase(activeProject);
+  const systemPrompt = knowledgeBase + BASE_SYSTEM_PROMPT;
 
   const res = await fetch('/api/anthropic/v1/messages', {
     method: 'POST',
@@ -66,7 +75,7 @@ export async function planWithClaude(enhancedPrompt: string): Promise<PlanResult
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages: [
         {
           role: 'user',

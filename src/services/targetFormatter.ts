@@ -70,7 +70,7 @@ export function formatCanonical(packet: BuildPacket): string {
 
 function formatForReplit(packet: BuildPacket): string {
   const parts: string[] = [
-    `# MASA AI → Replit Handoff`,
+    `# Massa AI → Replit Handoff`,
     '',
     section('Project Goal', packet.objective),
     '',
@@ -111,7 +111,7 @@ function formatForReplit(packet: BuildPacket): string {
 
 function formatForLovable(packet: BuildPacket): string {
   const parts: string[] = [
-    `# MASA AI → Lovable Build Brief`,
+    `# Massa AI → Lovable Build Brief`,
     '',
     section('What to Build', packet.objective),
     '',
@@ -153,7 +153,7 @@ function formatForLovable(packet: BuildPacket): string {
 
 function formatForGitHub(packet: BuildPacket): string {
   const parts: string[] = [
-    `# MASA AI → GitHub Implementation Summary`,
+    `# Massa AI → GitHub Implementation Summary`,
     '',
     section('Commit Scope', packet.objective),
     '',

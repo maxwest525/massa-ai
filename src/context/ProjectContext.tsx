@@ -5,9 +5,10 @@ import type {
   EnhanceProvider, BuildTarget, BuildPacket, PacketStatus,
 } from '../types';
 import { mockProjects } from '../data/mock';
-import { enhancePromptWithGPT, type EnhancedPromptResult } from '../services/openai';
+import type { EnhancedPromptResult } from '../services/openai';
 import { planWithClaude, type PlanResult } from '../services/claude';
 import { routePrompt, type RouteDecision } from '../services/router';
+import { runEnhancement } from '../services/enhancer';
 import { prepareBuildPayload, simulateDispatch, getToolDisplayName } from '../services/dispatcher';
 import { saveProjectMemory, getAllHistory, type ProjectMemoryEntry } from '../services/memory';
 import { resolveEnhanceProvider, isAnthropicKeySet } from '../services/config';
@@ -69,8 +70,8 @@ export interface ProjectContextValue {
 
 export const ProjectContext = createContext<ProjectContextValue | null>(null);
 
-const SK_ENHANCE_PROVIDER = (pid: string) => `masa-enhance-provider-${pid}`;
-const SK_BUILD_TARGET = (pid: string) => `masa-build-target-${pid}`;
+const SK_ENHANCE_PROVIDER = (pid: string) => `massa-enhance-provider-${pid}`;
+const SK_BUILD_TARGET = (pid: string) => `massa-build-target-${pid}`;
 
 const STAGE_ORDER: PipelineStage[] = [
   'enhancing', 'enhanced',
@@ -302,7 +303,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
     });
 
     try {
-      const { result, meta } = await enhancePromptWithGPT(rawPrompt);
+      const { result, latencyMs } = await runEnhancement(rawPrompt, enhanceProvider);
 
       setEnhancedResult(result);
       setEnhancedPrompt(result.fullText);
@@ -313,7 +314,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
         status: 'complete',
         output: [
           providerNote,
-          `Latency: ${meta.latencyMs}ms`,
+          `Latency: ${latencyMs}ms`,
           `Objective: ${result.objective.slice(0, 100)}`,
         ].join(' | '),
       });
@@ -325,7 +326,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
         details: result.objective,
       });
 
-      const route = routePrompt(result.fullText);
+      const route = await routePrompt(result.fullText);
       setRouteDecision(route);
       setPromptStatus('routed');
 
@@ -333,7 +334,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
         type: 'route',
         description: `Routed to ${route.target}: ${route.reason}`,
         agentId: 'system',
-        agentName: 'MASA Router',
+        agentName: 'Massa Router',
         status: 'complete',
         output: `Target: ${route.target} | Confidence: ${route.confidence}`,
       });
@@ -341,7 +342,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
       addChange({
         type: 'agent_assigned',
         description: `Task routed to ${route.target}`,
-        agentName: 'MASA Router',
+        agentName: 'Massa Router',
         details: route.reason,
       });
 
@@ -422,7 +423,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
     });
 
     try {
-      const plan = await planWithClaude(enhancedPrompt);
+      const plan = await planWithClaude(enhancedPrompt, activeProject);
       setPlanResult(plan);
       setIsPlanning(false);
       setPromptStatus('planned');
@@ -474,7 +475,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
       type: 'packet',
       description: `Build Packet generated for ${buildTarget.toUpperCase()}`,
       agentId: 'system',
-      agentName: 'MASA Builder',
+      agentName: 'Massa Builder',
       status: 'complete',
       output: [
         `Target: ${buildTarget}`,
@@ -487,7 +488,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
     addChange({
       type: 'phase_advanced',
       description: `Build Packet generated — target: ${buildTarget}`,
-      agentName: 'MASA Builder',
+      agentName: 'Massa Builder',
       details: packet.objective.slice(0, 100),
     });
 
@@ -511,7 +512,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
       type: 'build',
       description: `Build payload prepared — recommended tool: ${getToolDisplayName(payload.recommendedTool)}`,
       agentId: 'system',
-      agentName: 'MASA Builder',
+      agentName: 'Massa Builder',
       status: 'complete',
       output: `Goal: ${payload.goal.slice(0, 80)} | ${payload.steps.length} steps | ${payload.files.length} files`,
     });
@@ -519,7 +520,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
     addChange({
       type: 'phase_advanced',
       description: 'Build payload prepared — ready for dispatch',
-      agentName: 'MASA Builder',
+      agentName: 'Massa Builder',
       details: `Recommended: ${getToolDisplayName(payload.recommendedTool)}`,
     });
 
@@ -548,7 +549,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
     addChange({
       type: 'agent_assigned',
       description: `Task dispatched to ${toolName}`,
-      agentName: 'MASA Dispatcher',
+      agentName: 'Massa Dispatcher',
       details: buildPayload.goal.slice(0, 80),
     });
 

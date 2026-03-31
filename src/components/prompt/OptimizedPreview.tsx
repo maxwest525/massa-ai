@@ -114,7 +114,7 @@ export function OptimizedPreview() {
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-masa-surface border border-masa-border text-xs">
             <Route className="w-3.5 h-3.5 text-masa-info" />
             <span className="text-masa-text-dim">
-              Routed to{' '}
+              Recommended route:{' '}
               <span className="text-masa-text font-semibold">{routeDecision.target.toUpperCase()}</span>
             </span>
             <span className="text-masa-text-muted">—</span>
