@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  engine:
+    build:
+      context: ./engine
+      dockerfile: Dockerfile
+    ports:
+      - "${ENGINE_PORT:-8000}:8000"
+    env_file: .env
+    volumes:
+      - ./engine/strategies:/app/strategies   # hot-reload: mount strategies folder
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "${DASHBOARD_PORT:-3000}:3000"
+    environment:
+      - VITE_ENGINE_URL=http://localhost:${ENGINE_PORT:-8000}
+    depends_on:
+      - engine
+    restart: unless-stopped
+
+volumes:
+  redis_data:

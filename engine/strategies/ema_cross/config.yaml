@@ -1,0 +1,52 @@
+description: Trades the crossover of a fast and slow EMA. Buys when fast crosses above
+  slow, sells when fast crosses below.
+enabled: false
+exchange: binance
+id: ema_cross
+name: EMA Crossover
+parameters:
+  atr_multiplier:
+    default: 1.5
+    label: ATR Stop Multiplier
+    max: 5.0
+    min: 0.5
+    step: 0.1
+    type: float
+  fast_period:
+    default: 15
+    label: Fast EMA Period
+    max: 50
+    min: 3
+    step: 1
+    type: integer
+  risk_per_trade:
+    default: 1.0
+    label: Risk Per Trade (%)
+    max: 5.0
+    min: 0.1
+    step: 0.1
+    type: float
+  slow_period:
+    default: 21
+    label: Slow EMA Period
+    max: 200
+    min: 10
+    step: 1
+    type: integer
+  timeframe:
+    default: 1h
+    label: Timeframe
+    options:
+    - 1m
+    - 5m
+    - 15m
+    - 1h
+    - 4h
+    - 1d
+    type: enum
+risk_limits:
+  daily_loss_limit: 3.0
+  max_open_trades: 3
+  max_position_pct: 10.0
+symbol: BTC/USDT
+version: 1.0.0
