@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/mnt/c/Users/maxwe.DESKTOP-SAAG4MB/Downloads/jandm-repo/.claude\")",
+      "Bash(cp \"/mnt/c/Users/maxwe.DESKTOP-SAAG4MB/Downloads/jandm-repo/.claude/launch.json\" \"/mnt/c/Users/maxwe.DESKTOP-SAAG4MB/Downloads/jandm-repo/.claude/launch.json\")",
+      "Read(//c/mnt/c/Users/maxwe.DESKTOP-SAAG4MB/Downloads/jandm-repo/.claude/**)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(kill %1)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(gh repo:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(git init:*)",
+      "Bash(git remote:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

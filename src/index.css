@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-bg: #000000;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #111111;
+  --color-surface-3: #161616;
+  --color-border: #1a1a1a;
+  --color-border-2: #222222;
+  --color-text: #e5e5e5;
+  --color-text-muted: #666666;
+  --color-text-dim: #444444;
+  --color-green: #00c805;
+  --color-green-dim: #00c80533;
+  --color-red: #ff3b30;
+  --color-red-dim: #ff3b3033;
+  --color-blue: #0a84ff;
+  --color-yellow: #ffd60a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #333; }
+
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes ticker {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
